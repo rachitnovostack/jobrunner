@@ -23,10 +23,16 @@ type Job struct {
 
 const UNNAMED = "(unnamed)"
 
-func New(job cron.Job) *Job {
-	name := reflect.TypeOf(job).Name()
-	if name == "Func" {
-		name = UNNAMED
+// Support user-defined job name.
+func New(job cron.Job, n ...string) *Job {
+	name := UNNAMED
+	if len(n) > 0 {
+		name = n[0]
+	} else {
+		name = reflect.TypeOf(job).Name()
+		if name == "Func" {
+			name = UNNAMED
+		}
 	}
 	return &Job{
 		Name:  name,
