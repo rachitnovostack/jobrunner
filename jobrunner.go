@@ -34,6 +34,7 @@ func New(job cron.Job, n ...string) *Job {
 			name = UNNAMED
 		}
 	}
+
 	return &Job{
 		Name:  name,
 		inner: job,
